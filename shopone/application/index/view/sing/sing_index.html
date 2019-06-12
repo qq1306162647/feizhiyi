@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- <script type="text/javascript" src="__PUBLIC__/static/js/jquery-1.8.1.min.js"></script> -->
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/sign2.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css"/>
+	<script type="text/javascript" src="__PUBLIC__/static/js/calendar2.js"></script>
+
+
+</head>
+<body>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12 web_top_three">
+			<a class="" href="{:url('Index/index')}">
+				<img src="__PUBLIC__/static/img/list_back.png">
+			</a>
+			<span>{$viewData.webTitle}</span>
+		</div>
+	</div>
+</div>
+<div style="" id="calendar"></div>
+<div class="prompt_box" id="prompt_box">
+	
+</div>
+<div id="sign_note" style="text-align:center;position: relative;padding: 15px;    font-size: 14px;">
+	<span style="color:red;">*规则：签到可奖励积分</span>
+</div>
+<script type="text/javascript">
+$(function(){
+  	var signList={$viewData.jonsString|raw};
+   	calUtil.init(signList);
+});
+
+// function 
+</script>
+</body>
+</html>

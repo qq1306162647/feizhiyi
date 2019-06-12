@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/withdrawal_log.css">
+	
+</head>
+<body>
+	<div class="container-fluid content_box">
+		<div class="row">
+			<div class="col-xs-12 withdrawal_list_box">
+				{volist name="$viewData.dataList" id="dataList"}	
+					<div class="row money_list_box">
+						<div class="col-xs-12 no_padding">
+							<span class="col-xs-8 alipay_number">支付宝账号：{$dataList.alipay_number}</span>
+							{if $dataList.withdrawal_status eq 1}
+								<span class=" col-xs-4 submission_text">已提交申请</span>
+							{else /}
+								<span class="col-xs-4 make_money_text">已打款</span>
+							{/if}
+						</div>
+						<div class="col-xs-12 no_padding">
+							<span class="col-xs-6 action_money_text">提现金额<br />￥{$dataList.withdrawal_value}元</span>
+							<span class="col-xs-6 action_service_money_text">服务费<br />￥{$dataList.service_money}元</span>
+						</div>
+						<!-- <div class="col-xs-12">
+							<span class="col-xs-6 action_money_text">实际到账金额<br />￥{$dataList.withdrawal_value}元</span>
+							<span class="col-xs-6 action_service_money_text">提现申请时间<br />{$dataList.withdrawal_create_time}</span>
+						</div> -->
+						<div class="col-xs-12">
+							<span class="actual_action_money_text">实际到账金额：￥{$dataList.payment_value}元</span>
+						</div>
+						<div class="col-xs-12">
+							<span class="action_time_text">提现申请时间：￥{$dataList.withdrawal_create_time}</span>
+						</div>
+						
+					</div>
+				{/volist}	
+			</div>
+		</div>
+			
+	</div>
+	{include file="public/footer"}
+</body>
+</html>

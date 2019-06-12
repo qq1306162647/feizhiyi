@@ -1,0 +1,214 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>后台管理系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>充值记录</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <!-- 年月选择：<input type="month" name=""> -->
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>姓名</th>
+                                        <th>电话</th>
+                                        <th>充值金额</th>
+                                        <th>充值凭证</th>
+                                        <th>状态</th>
+                                        <th>提交时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="$viewData.dataList" id="dataList"}
+                                    <tr>
+                                        <td>
+
+                                            {$dataList.mid}
+                                        </td>
+                                        <td>
+                                            {$dataList.user_name}
+                                        </td>
+                                        <td>{$dataList.user_phone}</td>
+                                        <td>{$dataList.action_money_value}</td>
+                                        <td>
+                                            <img src="__PUBLIC__/uploads/voucher/{$dataList.pay_voucher}" style="width: 10rem;" onclick="showImg('__PUBLIC__/uploads/voucher/{$dataList.pay_voucher}')">
+                                        </td>
+                                        <td>
+                                            {$dataList.status_name}
+                                        </td>
+                                        <td>
+                                            {$dataList.money_create_time}
+                                        </td>
+                                        <td>
+                                            {if $dataList.audit_state eq 1}
+                                                <button type="button" class="btn btn-w-m btn-success" onclick="auditApproval({$dataList.mid})">审核通过</button>
+                                                <br />
+                                                <button type="button" class="btn btn-w-m btn-warning" onclick="showMessage({$dataList.uid},{$dataList.mid})">审核不通过</button>
+                                                <br />
+                                            {/if}
+                                            <button type="button" class="btn btn-w-m btn-danger" onclick="deleteData({$dataList.mid})">删除</button>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        {$viewData.dataList|raw}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="img_box" style="width: 100%;height: 100%;position: fixed;left:0; top:0;background-color: rgba(00,00,00,.8);display: none;text-align: center;" onclick="closeImg()">
+        <img src="" id="showImg" style="max-height: 80%;margin-top: 5%;">
+    </div>
+
+
+    <div id="message_box" style="width: 100%;height: 100%;position: fixed;left:0; top:0;background-color: rgba(00,00,00,.8);display: none;text-align: center;">
+        
+        <div style="width: 50%;margin:10% auto;background-color: #fff;padding: 10rem;text-align: center;">
+            <h3 style="margin-bottom: 3rem">请填写审核不通过原因</h3>
+            <form style="margin-bottom: 3rem" id="myForm">
+                <input type="hidden" value="" name="message_user_id" id="message_user_id">
+                <input type="hidden" id="mid"  name="mid" value="">
+                <textarea placeholder="请详细说明审核不通过的原因" style="width: 100%;height: 10rem;overflow:hidden; resize:none;" name="content_text"></textarea>
+            </form>
+            <button type="button" class="btn btn-w-m btn-success dim" onclick="noPassage()">
+                <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;确定
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-w-m btn-danger dim" onclick="closeMessage()">
+                <i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;取消
+            </button>
+        </div>
+        <img src="" id="showImg" style="max-height: 80%;margin-top: 5%;">
+    </div>
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function showMessage(userId,mid){
+            $("#message_user_id").val(userId);
+            $("#mid").val(mid);
+            $("#message_box").show();
+        }
+
+        function closeMessage(){
+            $("#message_box").hide();
+        }
+
+
+
+
+        function showImg(objimg){
+            $("#showImg").attr('src',objimg);
+            $("#img_box").show();
+        }
+
+        function closeImg(){
+            $("#img_box").hide();
+        }
+
+        function noPassage(){
+            $.ajax({
+                url:"{:url('Moneys/noPassage')}",
+                data:$("#myForm").serialize(),
+                dataType:"json",
+                type:"post",
+                success:function(data){
+                    alert(data.msg);
+                    if(data.status == 1){
+                        window.location.href="";
+                    }
+                }
+            })
+        }
+
+
+        function auditApproval(thisid){
+            if(confirm("确定要审核通过吗？")){
+                $.ajax({
+                    url:"{:url('Moneys/auditApproval')}",
+                    data:{s:thisid},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })
+            }
+        }
+
+        function deleteData(thisid){
+            if(confirm("您确定要删除此记录吗？")){
+                $.ajax({
+                    url:"{:url('Moneys/deleteData')}",
+                    data:{s:thisid},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+    
+
+</body>
+
+</html>

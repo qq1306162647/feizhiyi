@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/feedback.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-xs-12 feedback_top_box">
+				<a class="" href="javascript:history.go(-1)">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+				<span class="send_button" onclick="getData()">发送</span>
+			</div>
+		</div>
+
+		<form id="myForm">
+			<div class="row">
+				<div class="col-xs-12 input_centent_one">
+					<textarea placeholder="请写下您对我们的感受，我们将认真听取您的意见，努力提供更优质的服务~" name="feedback_text"></textarea>
+				</div>
+			</div>	
+
+			<div class="row input_centent_one">
+				<div class="col-xs-12">
+					<input type="text" name="contact_mode" placeholder="手机、 邮箱、 QQ号码（选填）">
+				</div>
+			</div>	
+		</form>
+	</div>
+<script type="text/javascript">
+	function getData(){
+		$.ajax({
+			url:"{:url('Feedback/getData')}",
+			dataType:"json",
+			type:"post",
+			data:$("#myForm").serialize(),
+			success:function(data){
+				alert(data.msg)
+				if(data.status == 1){
+					window.location.href="{:url('User/index')}"
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

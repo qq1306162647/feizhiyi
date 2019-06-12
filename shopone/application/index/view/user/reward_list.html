@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/user.css">
+	
+</head>
+<body>
+	<div class="container-fluid content_box">
+		{volist name="$viewData.dataList" id="dataList"}	
+			<div class="row reward_list_box">
+				<div class="col-xs-6 text-left">
+					{if $dataList.reward_cate eq 1}
+						+￥{$dataList.reward_money}元
+
+					{else /}
+						-￥{$dataList.reward_money}元<br />
+						状态：{$dataList.status_name}
+					{/if}
+					
+					
+				</div>
+				<div class="col-xs-6 text-right">
+					{$dataList.create_time}
+				</div>
+			</div>
+		{/volist}		
+	</div>
+	{include file="public/footer"}
+</body>
+</html>

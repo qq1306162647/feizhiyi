@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/message_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="javascript:history.go(-1)">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		{volist name="$viewData.dataList" id="dataList"}
+		<div class="row">
+			<div class="col-xs-12 message_send_time_text">
+				{$dataList.message_create_time}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 message_content">
+				<div class="row">
+					<div class="col-xs-12 message_text_one">
+						【{$dataList.message_taitle}】
+					</div>
+					<div class="col-xs-12 message_text_two">
+						{$dataList.message_content}
+					</div>
+					<!-- <div class="col-xs-12 message_text_three">
+						点击查看
+						<img src="__PUBLIC__/static/img/right_icon.png">
+					</div> -->
+				</div>
+			</div>
+		</div>
+		{/volist}
+	</div>
+
+	<!-- {include file="public/footer"} -->
+</body>
+</html>

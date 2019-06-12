@@ -1,0 +1,225 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>后台管理系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-title">
+                        <h5>全部用户</h5>
+                    </div>
+
+                    <div class="ibox-content">
+                        <form action="{:url('User/dataList')}" method="post">
+                            请输入用户的电话号码：<input type="number" value="{$Think.session.searchPhoneNumber}" name="searchPhoneNumber">
+                            <button type="submit" class="btn btn-w-m btn-success">
+                                 搜索
+                            </button>
+                        </form>
+                         <hr />
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead >
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>姓名</th>
+                                        <th>手机号</th>
+                                        <th>佣金余额</th>
+                                        <th>积分余额</th>
+                                        <th>用户级别</th>
+                                        <!-- <th>业绩信息</th> -->
+                                        <th>粉丝信息</th>
+                                        <th>推荐人信息</th>
+                                        <th>用户注册日期</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="$viewData.dataList" id="dataList"}
+                                    <tr>
+                                        <td>
+                                            {$dataList.uid}
+                                        </td>
+                                        <td>{$dataList.user_name}</td>
+                                        <td>{$dataList.user_phone}</td>
+                                        <td>
+
+                                            {$dataList.user_commission} <br />
+                                            <a class="btn btn-w-m btn-success" href="{:url('User/userCommissionList',['s'=>$dataList.uid])}">
+                                                佣金明细
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {$dataList.user_money} <br />
+                                            <a class="btn btn-w-m btn-success" href="{:url('User/userMoneyList',['s'=>$dataList.uid])}">
+                                                积分明细
+                                            </a>
+                                        </td>
+                                        <td>{$dataList.level_name}</td>
+                                        <!-- <td>
+                                            <a class="btn btn-w-m btn-success" href="{:url('User/recommendedList',['u'=>$dataList.uid])}">
+                                                直推业绩：{$dataList.recommend_one_achievement}
+                                            </a>
+                                            <br />
+                                            <a class="btn btn-w-m btn-success" href="{:url('User/recommendedList',['u'=>$dataList.uid])}">
+                                                团队业绩：{$dataList.recommend_team_achievement}
+                                            </a>
+                                        </td> --> 
+                                        <td>
+                                            <a class="btn btn-w-m btn-success" href="{:url('User/dataListOne',['s'=>$dataList.uid])}">
+                                                直推人数：{$dataList.recommend_one_number}
+                                            </a>
+                                            <br />
+                                            <!-- <a class="btn btn-w-m btn-success" href="{:url('User/recommendedList',['u'=>$dataList.uid])}"> -->
+                                            团队人数：{$dataList.recommend_team_number}
+                                            <!-- </a> -->
+                                        </td>   
+                                        
+                                        
+                                        <td>
+                                            {if $dataList.superiorAngen}
+                                                姓名：{$dataList.superiorAngen.user_name}<br />
+                                                手机号：{$dataList.superiorAngen.user_phone}<br />
+                                                级别：{$dataList.superiorAngen.level_name}<br />
+                                                
+                                            {else /}
+                                                无
+                                            {/if}
+                                        </td>
+                                        <td>{$dataList.user_create_time}</td>
+                                        <td>
+                                            <!-- <button type="button" class="btn btn-w-m btn-info" onclick="showDiv({$dataList.uid})">更换推荐人</button>
+                                            <div id="setRecommendedBox{$dataList.uid}" style="display: none">
+                                                <input type="number" id="rid{$dataList.uid}" value="{$dataList.recommend_code}" placeholder="推荐人编号">
+                                                <input type="hidden" id="uid{$dataList.uid}" value="{$dataList.uid}">
+                                                <button type="button" class="btn btn-w-m btn-success" onclick="getData({$dataList.uid})">
+                                                    确定更换
+                                                </button>
+                                            </div> -->
+
+                                            {if $dataList.user_level lt 4}
+                                            <button class="btn btn-w-m btn-success" onclick="setUserLevel({$dataList.uid})">
+                                               设置为运营商
+                                            </button>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        {$viewData.dataList|raw}
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function setUserLevel(uid){
+            if(confirm("确定要把此用户设置成运营商吗？")){
+                $.ajax({
+                    url:"{:url('User/setUserLevel')}",
+                    data:{uid:uid},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })  
+            }
+            
+        }
+
+
+         function getSearchWhere(){
+            $.ajax({
+                url:"{:url('User/dataList')}",
+                data:{searchPhoneNumber:$("#searchPhoneNumber").val()},
+                dataType:"json",
+                type:"post",
+                success:function(data){
+                    window.location.href="";
+                    
+                }
+            })
+            
+        }
+        function showDiv(obj){
+            $("#setRecommendedBox"+obj).show();
+        }
+        function getData(obj){
+            if(!$("#rid"+obj).val()){
+                alert('请输入推荐人的编号');
+            }else{
+                $.ajax({
+                    url:"{:url('User/setRecommended')}",
+                    data:{uid:$("#uid"+obj).val(),recommend_one:$("#rid"+obj).val()},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+    
+    
+
+</body>
+
+</html>

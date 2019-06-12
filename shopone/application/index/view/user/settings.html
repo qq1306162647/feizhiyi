@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/settings.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="javascript:history.go(-1)">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		<div class="row settings_list">
+			<!-- <div class="col-xs-12 settings_list_text border_one">
+				消息推送
+				{if $Think.session.userInfo.message_status eq 1}
+					<img src="__PUBLIC__/static/img/kg_2.png" style="width: 2rem;" onclick="setMessageStatus(this)">
+
+				{else /}
+					<img src="__PUBLIC__/static/img/kg_1.png" style="width: 2rem;" onclick="setMessageStatus(this)">
+				{/if}
+			</div> -->
+			<div class="col-xs-12 settings_list_text" onclick="delcache()">
+				清除缓存
+			</div>
+		</div>
+		<div class="row settings_list">
+			<a class="col-xs-12 settings_list_text border_one" href="{:url('User/setLoginPwd')}">
+				修改登录密码
+				<img src="__PUBLIC__/static/img/right_icon.png">
+			</a>
+			<a class="col-xs-12 settings_list_text" href="{:url('User/setPayPwd')}">
+				修改支付密码
+				<img src="__PUBLIC__/static/img/right_icon.png">
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+		function delcache(){
+			alert('清除完毕');
+		}
+
+		function setMessageStatus(obj)
+		{
+			$.ajax({
+				url:"{:url('User/setMessageStatus')}",
+				// data:{s:obj},
+				type:"post",
+				dataType:"json",
+				success:function(data){
+					if(data.status == 1){
+						if(data.thisStatus == 1){
+							$(obj).attr('src','__PUBLIC__/static/img/kg_2.png')
+						}else{
+							$(obj).attr('src','__PUBLIC__/static/img/kg_1.png')
+						}
+					}else{
+						alert(data.msg);
+					}
+				}
+			})
+		}
+	</script>
+	{include file="public/footer"}
+</body>
+</html>

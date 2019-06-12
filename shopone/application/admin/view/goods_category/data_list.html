@@ -1,0 +1,167 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 基础表格</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品类别</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th></th>
+                                        <th>类别名称</th>
+                                        <th>显示顺序</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="$viewData.dataList" id="dataList"}
+                                        <tr>
+                                            <td>
+                                                |
+                                            </td>
+                                            <td>{$dataList.category_name}</td>
+                                            <td>
+                                                {$dataList.category_sequence}
+                                            </td>
+                                            <td>
+                                                <a href="{:url('GoodsCategory/editData',['s'=>$dataList.cid])}">修改</a>
+                                            </td>
+                                        </tr>
+                                        {volist name="$dataList.twoList" id="twoList"}
+                                            <tr>
+                                                <td>
+                                                    --|
+                                                </td>
+                                                <td>
+                                                    二级类别名称：{$twoList.category_name} <br />
+                                                    二级类别排序：{$twoList.category_sequence} <br />
+                                                    <a href="{:url('GoodsCategory/editData',['s'=>$twoList.cid])}">修改</a>
+                                                </td>
+                                                <td colspan="2">
+                                                   {volist name="$twoList.threeList" id="threeList"}
+
+                                                    <div class="col-sm-3">
+                                                        <div class="chat-element">
+                                                            <a href="javascript:void(0)" class="pull-left">
+                                                                {if $threeList.category_picture}
+                                                                    <img class="img-circle" src="__PUBLIC__/uploads/goods_category/s_{$threeList.category_picture}" >
+                                                                {else />}
+                                                                    暂无图片
+                                                                {/if}
+                                                                <!-- <img alt="image" class="img-circle" src="__PUBLIC__/uploads/goods/"> -->
+                                                            </a>
+                                                            <div class="media-body ">
+                                                                <!-- <small class="pull-right text-navy">件商品</small> -->
+                                                                <strong>三级类别名称：{$threeList.category_name}</strong>
+                                                                <p class="m-b-xs">
+                                                                    三级类别排序：{$threeList.category_sequence}
+                                                                </p>
+                                                                <a class="text-muted" href="{:url('GoodsCategory/editData',['s'=>$threeList.cid])}">修改</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   {/volist}
+                                                </td>
+                                                <!-- <td>
+                                                    二级类别排序：{$twoList.category_sequence}
+                                                </td>
+                                                <td>
+                                                    <a href="{:url('GoodsCategory/editData',['s'=>$twoList.cid])}">修改</a>
+                                                </td> -->
+                                            </tr>
+                                                <!-- {volist name="$twoList.threeList" id="threeList"}
+                                                    <tr>
+                                                        <td >
+                                                            --|L
+                                                        </td>
+                                                        <td >
+                                                            {if $threeList.category_picture}
+                                                                <img src="__PUBLIC__/uploads/goods_category/s_{$threeList.category_picture}" style="width: 50px;">
+                                                            {else />}
+                                                                暂无图片
+                                                            {/if}
+                                                            <br />
+                                                            <button type="button" class="btn btn-w-m btn-success">{$threeList.category_name}</button>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            {$threeList.category_sequence}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{:url('GoodsCategory/editData',['s'=>$threeList.cid])}">修改</a>
+                                                        </td>
+                                                    </tr>
+                                                {/volist} -->
+                                        {/volist}
+                                    {/volist}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/demo/peity-demo.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+    
+    
+
+</body>
+
+</html>

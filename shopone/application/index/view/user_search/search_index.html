@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/search_index.css">
+	
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row search_top">
+		<div class="col-xs-2 search_back_box">
+			<a class="" href="javascript:history.go(-1)">
+				<img src="__PUBLIC__/static/img/list_back.png">
+			</a>
+		</div>
+		<div class="col-xs-8 search_input_box">
+			<input type="text" placeholder="请输入要您要搜索的商品" id="search_name" maxlength="20" >
+		</div>
+		<div class="col-xs-2 search_button_box">
+			<a class="" href="javascript:void(0)" onclick="setSearchText()">
+				搜索
+			</a>
+		</div>
+	</div>
+
+	<div class="row new_search_text_box">
+		<div class="col-xs-12">
+			最近搜索
+			<img src="__PUBLIC__/static/img/del_icon.png" onclick="openDelBox()" >
+		</div>
+	</div>
+	<div class="row search_log">
+		<div class="col-xs-12">
+			{volist name="$viewData.dataList" id="dataList" empty="您还没有搜索过商品"}
+				<a href="javascript:void(0)" onclick="setSearchLog('{$dataList.search_name}')">
+					{$dataList.search_name}
+				</a>
+			{/volist}
+		
+		</div>
+	</div>
+</div>
+<div class="del_bg_box" id="del_bg_box">
+	<div class="del_box">
+		<div class="del_text_box">
+			确定要清空吗？
+		</div>
+		<div class="del_left_box" onclick="closeDelBox()">
+			取消
+		</div>
+		<div class="del_right_box" onclick="delDataAction()">
+			确定
+		</div>
+	</div>
+</div>
+
+
+<!-- {include file="public/footer"} -->
+<script type="text/javascript">
+	$("#search_name").focus();
+function openDelBox(){
+	$("#del_bg_box").show();
+}
+
+function closeDelBox(){
+	$("#del_bg_box").hide();
+}
+function delDataAction(){
+	$.ajax({
+		url:"{:url('UserSearch/delUserLog')}",
+		dataType:"json",
+		type:"get",
+		success:function(data){
+			if(data.status == 1){
+				window.location.href="";
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+function setSearchLog(values)
+{
+	$.ajax({
+		url:"{:url('UserSearch/updateSessionSearchKeywords')}",
+		dataType:"json",
+		type:"post",
+		data:{s:values},
+		success:function(data){
+			if(data.status == 1){
+				window.location.href="{:url('Goods/searchGoodsList')}";
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+
+
+
+function setSearchText(){
+	$.ajax({
+		url:"{:url('UserSearch/setSearchValue')}",
+		dataType:"json",
+		type:"post",
+		data:{search_name:$("#search_name").val()},
+		success:function(data){
+			if(data.status == 1){
+				window.location.href="{:url('Goods/searchGoodsList')}";
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+</script>	
+	
+</body>
+</html>

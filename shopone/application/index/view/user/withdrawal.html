@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/user.css">
+	
+</head>
+<body>
+	<div class="container-fluid content_box">
+		<div class="row withdrawal_box">
+
+			<div class="col-xs-12 withdrawal_two">
+				可提现积分<br />
+				<span>￥{$viewData.userInfo.commission}积分</span>
+				<div class="col-xs-12 withdrawal_describe">
+					提现服务费为3%，如100元扣除3元到账金额为97元
+				</div>
+			</div>
+
+
+			<div class="col-xs-12 withdrawal_three">
+				
+				<input type="text" placeholder="支付宝账号" id="alnumber">
+				<input type="number" placeholder="提现金额" id="action_money" min="1">
+			</div>
+			
+
+			<!-- <input type="hidden" id="user_money" name="{$viewData.userInfo.commission}"> -->
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 withdrawal_four" onclick="getData()">
+				提现
+			</div>
+		</div>
+		
+
+	</div>
+	{include file="public/footer"}
+	<script type="text/javascript">
+
+		function getData(){
+			if($("#reward_money").val() < 10){
+				alert('提现金额不得小于10元')
+				return false;
+			}else{
+				$.ajax({
+					url:"{:url('User/withdrawalAction')}",
+					data:{alnumber:$("#alnumber").val(),action_money:$("#action_money").val()},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						
+						if(data.status == 1){
+							alert('提现申请已提交工作人员会尽快给您打款')
+							window.location.href="{:url('User/index')}"
+						}else{
+							alert(data.msg)
+						}
+					}
+				})
+			}
+			
+		}
+	</script>
+</body>
+</html>

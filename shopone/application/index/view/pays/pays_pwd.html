@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/pays_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		<div class="row pays_line_one">
+			<div class="col-xs-7 pays_line_one_text">
+				支付成功<br />
+				您的包裹正整装待发
+			</div>
+			<div class="col-xs-5">
+				<img src="__PUBLIC__/static/img/pays_ext.jpg">
+			</div>
+		</div>
+		<div class="row pays_line_two">
+			<div class="col-xs-12">
+				<a href="{:url('Order/index')}">查看订单</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="{:url('Index/index')}">返回首页</a>
+			</div>
+			
+		</div>
+	
+	</div>
+
+	<!-- {include file="public/footer"} -->
+</body>
+</html>

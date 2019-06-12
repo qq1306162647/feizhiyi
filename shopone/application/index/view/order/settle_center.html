@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/settle_center.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('ShoppingCart/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+
+
+		<div class="row settle_center_top">
+			{if $viewData.addressInfo}
+			<input type="hidden" id="address" value="{$viewData.addressInfo.aid}">
+			<a class="col-xs-12 settle_center" href="{:url('User/selectAddress')}">
+				<div class="row address_info_one" >
+					<div class="col-xs-2"></div>
+					<div class="col-xs-6 address_name" >{$viewData.addressInfo.address_name}</div>
+					<div class="col-xs-4 address_phone">{$viewData.addressInfo.address_phone}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-2 address_icon_box">
+						<img src="__PUBLIC__/static/img/address_icon.png">
+					</div>
+					<div class="col-xs-8 address_text_box">
+						{$viewData.addressInfo.address_text}
+					</div>
+					<div class="col-xs-2 right_select_box">
+						<img src="__PUBLIC__/static/img/right_icon.png">
+					</div>
+				</div>
+			</a>
+
+			{else /}
+			<input type="hidden" id="address" value="">
+			<div class="col-xs-12 insert_address_text">
+				<a href="{:url('User/addedAddress')}">添加收货地址</a>
+			</div>
+			{/if}
+		</div>
+
+		{volist name="$viewData.goodsInfo.dataList" id="dataList"}
+		<div class="row goods_list_box">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-4 goods_picture_box">
+						<img src="__PUBLIC__/static/img/goods1.jpg">
+					</div>
+					<div class="col-xs-8 goods_title_box">
+						{$dataList.goods_name}
+					</div>
+					<!-- <div class="col-xs-3 goods_price_box">
+						￥96341233.00
+					</div> -->
+				</div>
+				<div class="row shopping_number_box">
+					<div class="col-xs-6">
+						商品单价
+					</div>
+					<div class="col-xs-6 text-right">
+						{$dataList.goods_new_price}
+					</div>
+				</div>
+				<div class="row shopping_number_box">
+					<div class="col-xs-6">
+						购买数量
+					</div>
+					<div class="col-xs-6 text-right">
+						{$dataList.shopping_goods_number}
+					</div>
+				</div>
+				<div class="row shopping_number_box">
+					<div class="col-xs-12 text-right">
+						共<span>{$dataList.shopping_goods_number}</span>件商品  
+						小计：<span class="red_color">￥{$dataList.shopping_goods_total_price}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		{/volist}
+		<!-- <div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-6">
+						买家留言
+					</div>
+					<div class="col-xs-6">
+						<input type="" name="">
+					</div>
+				</div>
+			</div>
+		</div> -->
+		
+	</div>
+	<div class="settle_bottom_box">
+		<div class="settle_bottom_left">
+			实付款：<span>￥{$viewData.goodsInfo.goodsTotal}</span>
+		</div>
+		<div class="settle_bottom_right" onclick="getData()">
+			提交订单
+		</div>
+	</div>
+	<div class="defaule_prompt_box" id="defaule_prompt_box">
+		<input type="hidden" id="oid">
+		<div class="defaule_prompt_content">
+			<div class="defaule_prompt_content_top" id="prompt_text">
+				此行为提示文字
+			</div>
+			<div class="defaule_prompt_content_left" onclick="orderPay()">
+				去付款
+			</div>
+			<a class="defaule_prompt_content_right" href="{:url('Order/index')}">
+				查看订单
+			</a>
+		</div>
+	</div>
+	<!-- {include file="public/footer"} -->
+<script type="text/javascript">
+	function getData(){
+
+		// return false;
+		if($("#address").val()){
+			$.ajax({
+				url:"{:url('Order/getOrderData')}",
+				data:{order_address_id:$("#address").val()},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					$("#prompt_text").html(data.msg);
+					$("#defaule_prompt_box").show();
+					if(data.status == 1){
+						$("#oid").val(data.oid);
+						// orderPay(data.oid);
+					}else{
+						alert(data.msg);
+					}
+				}
+			})
+		}else{
+			alert('请添加收货地址');
+		}
+	}
+
+
+	function orderPay(objid){
+		$.ajax({
+			url:"{:url('Order/orderPay')}",
+			data:{oid:$("#oid").val()},
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				alert(data.msg)
+
+				if(data.status == 1){
+					window.location.href="{:url('Pays/index')}"
+				}else if(data.status == 2){
+					// window.location.href="{:url('User/index')}"
+				}else if(data.status == 3){
+					window.location.href="{:url('User/userRecharge')}"
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

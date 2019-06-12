@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/cate_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row cate_top_box">
+			<a class="col-xs-1 text-center" href="{:url('Index/index')}">
+				<img src="__PUBLIC__/static/img/cate_1.jpg">
+			</a>
+			<div class="col-xs-10 text-center">
+				<input type="text" id="cate_top_input" class="cate_top_input" onfocus="webToSearch()" placeholder="请输入您要搜索的关键字">
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row index_top_box">
+			<div class="col-xs-3 text-center category_left_box">
+				{volist name="$viewData.dataListOne" id="dataListOne" key="keys"}
+					{if $keys eq 1}
+					<div class="category_one_list_box selected_left_box" onclick="getCateList({$dataListOne.cid})" id="category_one_list_{$dataListOne.cid}">
+					{else /}
+					<div class="category_one_list_box" onclick="getCateList({$dataListOne.cid})" id="category_one_list_{$dataListOne.cid}">
+					{/if}
+						{$dataListOne.category_name}
+					</div>
+				{/volist}
+			</div>
+			<div class="col-xs-9 cate_right_box" >
+				<div class="row " id="cate_right_box">
+					<!-- <div class="col-xs-12 cate_two_box">
+						银饰
+					</div>
+					<a class="col-xs-4 cate_three_box" href="">
+						<img src="__PUBLIC__/static/img/goods1.jpg"> <br />
+						银手镯
+					</a>
+					<a class="col-xs-4 cate_three_box" href="">
+						<img src="__PUBLIC__/static/img/goods1.jpg"> <br />
+						银手镯
+					</a>
+					<a class="col-xs-4 cate_three_box" href="">
+						<img src="__PUBLIC__/static/img/goods1.jpg"> <br />
+						银手镯
+					</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+//页面跳转到搜索
+function webToSearch()
+{
+	window.location.href="{:url('UserSearch/index')}";
+}
+getCateList({$viewData['dataListOne'][0]['cid']})
+function getCateList(id)
+{
+
+	$.ajax({
+		url:"{:url('Categorys/getCateList')}",
+		data:{s:id},
+		dataType:"json",
+		type:"post",
+		success:function(data){
+			if(data.status == 1){
+				str = '';
+				$.each(data.dataList, function(key,value){
+					str += '<div class="col-xs-12 cate_two_box">'
+					str += value.category_name
+					str += '</div>'
+					$.each(value.threeList,function(threeKey,threeValue){
+						console.log(threeKey);
+						if(threeKey>=0){
+							url = "{:url('Goods/dataList',['s'=>'urlone'])}";
+							newUrl = url.replace('urlone',threeValue.cid);
+							str += '<a class="col-xs-4 cate_three_box" href="'+newUrl+'">'
+							str += 		'<img src="__PUBLIC__/uploads/goods_category/'+threeValue.category_picture+'"> <br />'
+							str += 		threeValue.category_name
+							str += '</a>'
+						}
+						
+					});
+				});
+				$("#cate_right_box").html(str);
+			}else{
+				$("#cate_right_box").html(data.msg);
+			}
+			$(".category_one_list_box").removeClass('selected_left_box');
+			$("#category_one_list_"+id).addClass('selected_left_box');
+		}
+	})
+}
+</script>
+
+	<!-- {include file="public/footer"} -->
+</body>
+</html>

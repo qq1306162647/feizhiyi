@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/password.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="javascript:history.go(-1)">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		<form id="myForm">
+		<div class="row set_info_box">
+			<div class="col-xs-12">
+				<div class="row set_info_list">
+					<div class="col-xs-4">
+						新密码
+					</div>
+					<div class="col-xs-8">
+						<input type="password" name="password" placeholder="请输入新密码">
+					</div>
+				</div>
+				<div class="row set_info_list">
+					<div class="col-xs-4">
+						确认密码
+					</div>
+					<div class="col-xs-8">
+						<input type="password" name="password_confirm" placeholder="请再次输入密码">
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+		<div class="row">
+			<div class="col-xs-12 end_send_button" onclick="setData()">
+				完成
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function setData()
+		{
+			$.ajax({
+				url:"{:url('User/setPaysPwdAction')}",
+				data:$("#myForm").serialize(),
+				type:"post",
+				dataType:"json",
+				success:function(data){
+					alert(data.msg);
+					if(data.status == 1){
+						window.location.href="{:url('User/index')}"
+					}
+				}
+			})
+		}
+	</script>
+	{include file="public/footer"}
+</body>
+</html>

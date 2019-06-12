@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+	<script type="text/javascript" src="__PUBLIC__/static/js/base.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row index_top_box">
+			<div class="col-xs-10 text-center">
+				<input type="text" id="index_search_input" class="index_search_input" placeholder="搜索商品标题" onFocus="webToSearch()">
+			</div>
+			<div class="col-xs-2 text-left">
+				<img src="__PUBLIC__/static/img/xs.jpg">
+			</div>
+		</div>
+		
+	</div>
+	<div id="carousel-example-generic " class="carousel slide bannse_box" data-ride="carousel">
+		<div class="index_cate_box">
+			<div class="index_cate_list_box">
+				{volist name="$viewData.cateList" id="cateList"}
+				<a class="index_cate_link" href="{:url('Goods/dataList',['s'=>$cateList.cid])}">
+					{$cateList.category_name}
+				</a>
+				{/volist}
+			</div>
+			<a class="index_cate_right_box" href="{:url('Categorys/index')}">
+				<img src="__PUBLIC__/static/img/index_menu_icon.png">
+			</a>
+			
+		</div>
+	  	<!-- Indicators -->
+	  	<ol class="carousel-indicators">
+	  		{volist name="viewData.bannerList" id="bannerListTest" key="k"}
+	  			{if $k eq 1}
+				    <li data-target="#carousel-example-generic" data-slide-to="{$k-1}" class="active"></li>
+			    {else /}
+					<li data-target="#carousel-example-generic" data-slide-to="{$k-1}"></li>
+			    {/if}
+
+		    {/volist}
+	  	</ol>
+
+	  	<!-- Wrapper for slides -->
+	  	<div class="carousel-inner banner_list_box" role="listbox">
+	  		{volist name="viewData.bannerList" id="bannerListPicture" key="ks"}
+
+	  			{if $ks eq 1}
+				    <div class="item active">
+				      <img src="__PUBLIC__/uploads/banner/{$bannerListPicture.banner_picture}" alt="{$bannerListPicture.banner_name}">
+				    </div>
+			    {else /}
+					<div class="item">
+				       <img src="__PUBLIC__/uploads/banner/{$bannerListPicture.banner_picture}" alt="{$bannerListPicture.banner_name}">
+				    </div>
+			    {/if}
+
+		    {/volist}
+	  	</div>
+	</div>
+
+	<div class="container index_content_box">
+		<div class="row">
+			<a class="col-xs-3 plate_list_box" href="{:url('Goods/plateGoods',['s'=>1])}" >
+				<img src="__PUBLIC__/static/img/rm.jpg"> <br />
+				热卖尖货
+			</a>
+			<a class="col-xs-3 plate_list_box" href="{:url('Goods/plateGoods',['s'=>2])}" >
+				<img src="__PUBLIC__/static/img/mr.jpg"> <br />
+				每日精选
+			</a>
+			<a class="col-xs-3 plate_list_box" href="{:url('Goods/plateGoods',['s'=>3])}" >
+				<img src="__PUBLIC__/static/img/jp.jpg"> <br />
+				精品热货
+			</a>
+			<a class="col-xs-3 plate_list_box" href="{:url('Sing/index')}" >
+				<img src="__PUBLIC__/static/img/jf.jpg"> <br />
+				积分签到
+			</a>
+		</div>
+		<div class="row">
+			<a class="col-xs-12 red_pack_box">
+				<img src="__PUBLIC__/static/img/hb.jpg">
+			</a>
+		</div>
+		<div class="row" id="notice_content">
+			<div class="col-xs-12 notice_box" id="notice_box_1">
+				<a href="{:url('Notice/index',['s'=>$viewData.noticeInfo.nid])}">
+					<img src="__PUBLIC__/static/img/gg.jpg">
+					<span>公告</span>{$viewData['noticeInfo']['notice_title']}
+				</a>
+			</div>
+			<div class="col-xs-12" id="notice_box_2">
+			</div>
+		</div>
+
+		<!-- 商品优选开始 -->
+		<div class="row shop_plate_title_box">
+			<div class="col-xs-1 ">
+				<img src="__PUBLIC__/static/img/plate_icon.jpg">
+			</div>
+			<div class="col-xs-7 plate_text_box">
+				商品优选
+			</div>
+			<a href="{:url('Goods/plateGoods',['s'=>4])}" class="col-xs-3 plate_mare_box">
+				更多 >
+			</a>
+		</div>
+		<div class="row">
+			{volist name="viewData.goodsListOne" id="goodsListOne"}
+				<a class="col-xs-4 goods_one_list" href="{:url('Goods/details',['s'=>$goodsListOne.gid])}">
+					<span class="goods_one_top">
+						已抢&nbsp;{$goodsListOne.goods_sell_number}&nbsp;件
+					</span>
+					<div class="goods_img_box">
+						<img src="__PUBLIC__/uploads/goods/s_{$goodsListOne.goods_picture}">
+					</div>
+					<div class="goods_title_box">
+						{$goodsListOne.goods_name}
+					</div>
+					<div class="goods_price_box">
+						<span>{$goodsListOne.goods_new_price}</span>元
+					</div>
+				</a>
+			{/volist}
+		</div>
+		<!-- 商品优选结束 -->
+
+		<!-- 推荐商品开始 -->
+		<div class="row shop_plate_title_box">
+			<div class="col-xs-1 ">
+				<img src="__PUBLIC__/static/img/plate_icon.jpg">
+			</div>
+			<div class="col-xs-7 plate_text_box">
+				推荐商品
+			</div>
+			<a href="{:url('Goods/plateGoods',['s'=>5])}" class="col-xs-3 plate_mare_box">
+				更多 >
+			</a>
+		</div>
+		<div class="test1">
+			{volist name="viewData.goodsListTwo" id="goodsListTwo"}
+				<a class="goods_two_list_box" href="{:url('Goods/details',['s'=>$goodsListTwo.gid])}">
+					<div class="goods_two_img_box">
+						<img src="__PUBLIC__/uploads/goods/s_{$goodsListTwo.goods_picture}">
+					</div>
+					<div class="goods_two_title_box">
+						{$goodsListTwo.goods_name}
+					</div>
+					<div class="goods_two_text_box">
+						<span class="goods_two_text_price">￥{$goodsListTwo.goods_new_price}</span>
+						{if $goodsListTwo.goods_is_postage eq 1}
+							<span class="goods_two_postage">免邮</span>
+						{/if}
+						<!-- <span class="goods_two_postage">免邮</span> -->
+					</div>
+				</a>
+			{/volist}
+		</div>
+		<!-- 推荐商品结束 -->
+	</div>
+	
+	
+	{include file="public/footer"}
+<script type="text/javascript">
+//页面跳转到搜索
+function webToSearch()
+{
+	window.location.href="{:url('UserSearch/index')}";
+
+}
+</script>	
+</body>
+</html>

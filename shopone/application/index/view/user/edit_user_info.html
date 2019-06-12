@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/edit_user_info.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+				<span class="send_button" onclick="getData()">保存</span>
+			</div>
+		</div>
+		<div class="row edit_box">
+			<form id="myForm">
+			<div class="col-xs-12">
+				<div class="row edit_box_list">
+					<div class="col-xs-4">头像</div>
+					<label class="col-xs-8" for="pictureFile">
+						<input type="file" id="pictureFile" accept="image/gif,image/jpeg,image/png" style="display: none" onchange="previewPicture()" name="picture_file">
+						{if $userInfo.user_picture}
+							<img src="__PUBLIC__/uploads/user/{$userInfo.user_picture}" id="img3">
+						{else /}
+							<img src="__PUBLIC__/static/img/defaule_picture1.png" id="img3">
+						{/if}
+					</label>
+				</div>
+				<div class="row edit_box_list">
+					<div class="col-xs-4">姓名</div>
+					<div class="col-xs-8">
+						<input type="text" value="{$userInfo.user_name}" name="user_name">
+					</div>
+				</div>
+				<div class="row edit_box_list">
+					<div class="col-xs-4">电话</div>
+					<div class="col-xs-8">
+						<input type="text" value="{$userInfo.user_phone}" name="user_phone">
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	
+	</div>
+	<script type="text/javascript">
+		function previewPicture() {
+	 		// $("#picture_box").css("display", "block");
+		 	var reads = new FileReader();
+		 	f = document.getElementById('pictureFile').files[0];
+		 	reads.readAsDataURL(f);
+		 	reads.onload = function(e) {
+		 		document.getElementById('img3').src = this.result;
+		 		// $("#img3").css("display", "block");
+		 	};
+		}
+		function getData(){
+			$("#myForm").ajaxSubmit({
+				url:"{:url('User/setUserInfo')}",
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					alert(data.msg);
+					if(data.status == 1){
+						window.location.href="{:url('User/index')}";
+					}
+				}
+			})
+		}
+	</script>
+	<!-- {include file="public/footer"} -->
+</body>
+</html>

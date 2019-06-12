@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/user_index.css">
+	
+</head>
+<body>
+	<div class="container">
+		<div class="row user_top_box">
+			<a class="col-xs-3 user_picture" href="{:url('User/editUserInfo')}">
+				{if $userInfo.user_picture}
+					<img src="__PUBLIC__/uploads/user/{$userInfo.user_picture}">
+				{else /}
+					<img src="__PUBLIC__/static/img/defaule_picture2.png">
+				{/if}
+				
+				
+			</a>
+			<div class="col-xs-6 user_top_text_box">
+				{$viewData.userInfo.user_name} <br />
+				<span class="vip_img_box"><img src="__PUBLIC__/static/img/zs.png"></span>
+
+				<span class="vip_box">{$viewData.userInfo.level_name}</span> <br />
+				邀请人：{$viewData.userInfo.recommend_code}
+			</div>
+			<div class="col-xs-3 user_top_right text-left">
+				<a href="{:url('User/settings')}">
+					<img src="__PUBLIC__/static/img/sz.png">
+				</a>
+				&nbsp;
+				<a href="{:url('Message/index')}">
+					<img src="__PUBLIC__/static/img/xx.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="container user_index_content">
+		<div class="row user_content_box">
+			<a class="col-xs-3 user_index_text" href="{:url('Withdrawal/index')}">
+				<span>{$viewData.userInfo.user_commission}</span><br />
+				分润收益
+			</a>
+			<a class="col-xs-3 user_index_text" href="{:url('User/wallet')}">
+				<span>{$viewData.userInfo.user_money}</span><br />
+				购物积分
+			</a>
+			<a class=" col-xs-3 user_index_text" href="{:url('User/oneTeam')}">
+				<span>{$viewData.userInfo.recommend_one_number}</span><br />
+				直推人数
+			</a>
+			<a class=" col-xs-3 user_index_text" href="{:url('User/myTeam')}">
+				<span>{$viewData.userInfo.recommend_team_number}</span><br />
+				团队人员
+			</a>
+		</div>
+		<div class="row user_content_box">
+			<a class="col-xs-3 user_index_text" href="{:url('order/index',['s'=>0])}">
+				<img src="__PUBLIC__/static/img/all.jpg"><br />
+				全部订单
+			</a>
+			<a class="col-xs-3 user_index_text" href="{:url('order/index',['s'=>2])}">
+				<img src="__PUBLIC__/static/img/fk.jpg"><br />
+				已付款
+			</a>
+			<a class=" col-xs-3 user_index_text" href="{:url('order/index',['s'=>4])}">
+				<img src="__PUBLIC__/static/img/wc.jpg"><br />
+				已完成
+			</a>
+			<a class=" col-xs-3 user_index_text" href="{:url('order/invalidList')}">
+				<img src="__PUBLIC__/static/img/sx.jpg"><br />
+				已失效
+			</a>
+		</div>
+		<div class="row user_content_box">
+			<a class="col-xs-3 user_index_text user_index_text_three" href="{:url('User/wallet')}">
+				<img src="__PUBLIC__/static/img/wdqb.jpg"><br />
+				<p>我的钱包</p>
+			</a>
+			<a class="col-xs-3 user_index_text user_index_text_three" href="{:url('User/userRecharge')}">
+				<img src="__PUBLIC__/static/img/wddj.jpg"><br />
+				<p>我的等级</p>
+			</a>
+			<!-- <div class=" col-xs-3 user_index_text user_index_text_three">
+				<img src="__PUBLIC__/static/img/wdpl.jpg"><br />
+				<p>我的评论</p>
+			</div> -->
+			<a class=" col-xs-3 user_index_text user_index_text_three" href="{:url('User/profit')}">
+				<img src="__PUBLIC__/static/img/wdsy.jpg"><br />
+				<p>我的收益</p>
+			</a>
+			<!-- <div class="col-xs-3 user_index_text user_index_text_three">
+				<img src="__PUBLIC__/static/img/wdsc.jpg"><br />
+				<p>我的收藏</p>
+			</div> -->
+			<a class="col-xs-3 user_index_text user_index_text_three" href="{:url('Feedback/index')}">
+				<img src="__PUBLIC__/static/img/yjfk.jpg"><br />
+				<p>意见反馈</p>
+			</a>
+			<!-- <div class=" col-xs-3 user_index_text user_index_text_three">
+				<img src="__PUBLIC__/static/img/bzzx.jpg"><br />
+				<p>帮助中心</p>
+			</div> -->
+			<a class=" col-xs-3 user_index_text user_index_text_three" href="{:url('Message/index')}">
+				<img src="__PUBLIC__/static/img/xxzx.jpg"><br />
+				<p>消息中心</p>
+			</a>
+			<a class="col-xs-3 user_index_text user_index_text_three" href="{:url('User/setPayPwd')}">
+				<img src="__PUBLIC__/static/img/zfmm.jpg"><br />
+				<p>支付密码</p>
+			</a>
+			<a class="col-xs-3 user_index_text user_index_text_three" href="{:url('User/setLoginPwd')}">
+				<img src="__PUBLIC__/static/img/dlmm.jpg"><br />
+				<p>登录密码</p>
+			</a>
+			<a class=" col-xs-3 user_index_text user_index_text_three" href="{:url('User/receivingAddress')}">
+				<img src="__PUBLIC__/static/img/shdz.png"><br />
+				<p>收货地址</p>
+			</a>
+		</div>
+	</div>
+	{include file="public/footer"}
+</body>
+</html>

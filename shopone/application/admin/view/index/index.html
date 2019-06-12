@@ -1,0 +1,248 @@
+<!DOCTYPE html> <html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>分销商城</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation" >
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" style="font-size:20px;">
+                                        <!-- <strong class="font-bold">分销商城</strong> -->
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">
+                            
+                        </div>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('Index/dataStatistics')}" target="myFrameName">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">主页</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a class="J_menuItem" href="{:url('System/editData')}">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">系统设置</span>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-file-picture-o"></i>
+                            <span class="nav-label">轮播图管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('Banner/dataList')}" target="myFrameName">轮播图列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('Banner/addData')}" target="myFrameName">添加轮播图</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-label">用户管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('User/dataList')}" target="myFrameName">用户列表</a>
+                            </li>
+                            <!-- <li>
+                                <a class="J_menuItem" href="{:url('User/managerList')}" target="myFrameName">经理列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('User/ceoList')}" target="myFrameName">总监列表</a>
+                            </li> -->
+                        </ul>
+                    </li>
+                    
+
+                    <!-- <li>
+                        <a href="mailbox.html">
+                            <i class="fa fa-envelope"></i> 
+                            <span class="nav-label">产品案例</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('Article/dataList')}">案例列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('Article/addData')}">添加案例</a>
+                            </li>
+                         
+                        </ul>
+                    </li> -->
+                    <li>
+                        <a href="mailbox.html">
+                            <i class="fa fa-cubes"></i> 
+                            <span class="nav-label">商品管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('Goods/dataList')}">商品列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('Goods/addData')}">添加商品</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('GoodsCategory/dataList')}">商品分类</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('GoodsCategory/addData')}">新增分类</a>
+                            </li>
+                         
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a class="J_menuItem" href="{:url('Moneys/withdrawalList')}">
+                            <i class="fa fa-bar-chart"></i>
+                            <span class="nav-label">板块管理</span>
+                        </a>
+                    </li>
+                     -->
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-flask"></i> 
+                            <span class="nav-label">订单管理</span><span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="{:url('Order/dataList')}">全部订单</a>
+                            </li>
+                            <li><a class="J_menuItem" href="{:url('Order/dataList',['s'=>1])}">未付款订单</a>
+                            </li>
+                            <li><a class="J_menuItem" href="{:url('Order/dataList',['s'=>2])}">未发货订单</a>
+                            </li>
+                            <li><a class="J_menuItem" href="{:url('Order/dataList',['s'=>3])}">已发货订单</a>
+                            </li>
+                            <li><a class="J_menuItem" href="{:url('Order/dataList',['s'=>4])}">已完成订单</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span class="nav-label">佣金管理</span><span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('Moneys/commissionList')}">佣金列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('Moneys/commissionProportion')}">佣金比例</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('Moneys/allRechargeList')}">
+                            <i class="fa fa-credit-card"></i>
+                            <span class="nav-label">充值管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('Moneys/withdrawalList')}">
+                            <i class="fa fa-money"></i>
+                            <span class="nav-label">提现管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('Index/dataStatistics')}">
+                            <i class="fa fa-bar-chart"></i>
+                            <span class="nav-label">数据统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html">
+                            <i class="fa fa-envelope"></i> 
+                            <span class="nav-label">公告管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('Notice/dataList')}">公告列表</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('Notice/addData')}">添加公告</a>
+                            </li>
+                         
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('Admin/setPassword')}">
+                            <i class="fa fa-lock"></i>
+                            <span class="nav-label">修改密码</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#">
+                            <i class="fa fa-bars"></i> 
+                        </a>
+                    </div>
+                </nav>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe name="myFrameName" id="J_iframe" width="100%" height="100%" src="{:url('Index/dataStatistics')}" frameborder="0"  seamless></iframe>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/layer/layer.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/hAdmin.js?v=4.1.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/admin/js/index.js"></script>
+
+    <!-- 第三方插件 -->
+<div style="text-align:center;">
+<!-- <p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p> -->
+</div>
+</body>
+
+</html>

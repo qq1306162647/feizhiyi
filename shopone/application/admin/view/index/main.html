@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title> - 主页示例</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row row-sm text-center">
+                            <div class="col-sm-6">
+                                <div class="widget lazur-bg  p-lg text-center">
+                                    <div class="m-b-md">
+                                        <!-- <i class="fa fa-user fa-3x"></i> -->
+                                        <h1 class="m-xs">用户统计</h1>
+                                        <br />
+
+                                        <h3 class="font-bold no-margins">
+                                            用户总数量：{$viewData.userSum}
+                                        </h3>
+                                        <br />
+                                        {volist name="$viewData.levelList" id="levelList"}
+                                            <h3 class="font-bold no-margins">
+                                                {$levelList.level_name}：{$levelList.userNumber}
+                                            </h3>
+                                            <br />
+                                        {/volist}
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="widget red-bg p-lg text-center">
+                                    <div class="m-b-md">
+                                        <!-- <i class="fa fa-bell fa-4x"></i> -->
+                                        <h1 class="m-xs">营业额统计</h1>
+                                        <br />
+                                        <h3 class="font-bold no-margins">
+                                            订单总营业额：{$viewData.orderTurnover}
+                                        </h3>
+                                        <br />
+                                        <h3 class="font-bold no-margins">
+                                            订单数量：{$viewData.orderCount}
+                                        </h3>
+                                        <br />
+                                      
+                                        <h3 class="font-bold no-margins">
+                                            --
+                                        </h3>
+                                        <br />
+                                        <h3 class="font-bold no-margins">
+                                            --
+                                        </h3>
+                                        <br />
+                                        <h3 class="font-bold no-margins">
+                                            --
+                                        </h3>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/layer/layer.min.js"></script>
+    <!-- Flot -->
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.pie.js"></script>
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js"></script>
+    <!--flotdemo-->
+    <script type="text/javascript">
+
+
+    $("button").click(function() {
+        doPlot($(this).text());
+    });
+    function getWhere(){
+        if(!$("#startDate").val()){
+            alert("请选择开始日期");
+        }else if(!$("#endDate").val()){
+            alert("请选择结束日期");
+        }else{
+            $.ajax({
+                url:"{:url('index/getwhere')}",
+                data:$("#myForm").serialize(),
+                dataType:"json",
+                type:"post",
+                success:function(data){
+                    if(data.status == 1){
+                        window.location.href="";
+                    }
+                    console.log(data);
+                }
+            })
+        }
+        
+    }
+    </script>
+</body>
+
+</html>

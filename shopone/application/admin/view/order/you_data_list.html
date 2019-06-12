@@ -1,0 +1,140 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>后台管理系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{$viewData.dataInfo.user_name}的订单</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>下单产品</th>
+                                        <th>下单数量</th>
+                                        <th>单价</th>
+                                        <th>总价</th>
+                                        <th>下单人姓名</th>
+                                        <th>下单人手机号</th>
+                                        <th>收货地址</th>
+                                        <th>下单时间</th>
+                                        <th>订单状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="$viewData.dataList" id="dataList"}
+                                    <tr>
+                                        <td>
+                                            {$dataList.oid}
+                                        </td>
+                                        <td>{$dataList.goods_name}</td>
+                                        <td>{$dataList.order_number}</td>
+                                        <td>{$dataList.order_unit_price}</td>
+                                        <td>{$dataList.order_total}</td>
+                                        <td>{$dataList.user_name}</td>
+                                        <td>{$dataList.user_phone}</td>
+                                        <td style="max-width: 250px">{$dataList.user_address}</td>
+                                        <td>{$dataList.order_create_time}</td>
+                                        <td>{$dataList.status_name}</td>
+                                        <td>
+                                            {if $dataList.order_status eq 1}
+                                            <button type="button" class="btn btn-w-m btn-success dim" onclick="setData({$dataList.oid})">
+                                                <i class="fa fa-check"></i>点击完成此订单
+                                            </button>
+                                            
+                                            {/if}
+                                            <button type="button" class="btn btn-w-m btn-danger dim" onclick="deleteData({$dataList.oid})">删除此订单</button>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        {$viewData.dataList|raw}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+
+
+    <script type="text/javascript">
+        function setData(thisid){
+            if(confirm("您确定要完成此订单吗？")){
+                $.ajax({
+                    url:"{:url('Order/updateDataStatus')}",
+                    data:{oid:thisid},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })
+            }
+        }
+        function deleteData(thisid){
+            if(confirm("您确定要删除此订单吗？")){
+                $.ajax({
+                    url:"{:url('Order/deleteData')}",
+                    data:{oid:thisid},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        alert(data.msg);
+                        if(data.status == 1){
+                            window.location.href="";
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+    
+    
+
+</body>
+
+</html>

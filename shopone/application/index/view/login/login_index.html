@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/regist_index.css">
+	
+</head>
+<body>
+	
+	<div class="container-fluid">
+		<div class="row ">
+			<div class="col-xs-12 text-center web_top_one_box">
+				{$viewData.webTitle}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 regist_text_box">
+				用户登录
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 regist_data_box">
+				<form id="myForm">
+					<div class="row regist_data_line">
+						<div class="col-xs-5 row_left_box">手机号</div>
+						<div class="col-xs-7 row_right_box">
+							<input type="number" name="user_phone" placeholder="请输入手机号" maxlength="20">
+						</div>
+					</div>
+					<div class="row regist_data_line">
+						<div class="col-xs-5 row_left_box">密码</div>
+						<div class="col-xs-7 row_right_box">
+							<input type="password" name="password" placeholder="请输入密码">
+						</div>
+					</div>
+				</form>
+				
+			</div>
+
+		</div>
+		<div class="row">
+			<a class="col-xs-12 regist_bottom_box" href="{:url('Regist/index')}">
+				还没有账号？<span>去注册</span>
+			</a>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 regist_button" onclick="getData() ">
+				登录
+			</div>
+		</div>
+		
+	</div>
+	
+</body>
+<script type="text/javascript">
+	function getData(){
+		$.ajax({
+			url:"{:url('Login/loginAction')}",
+			data:$("#myForm").serialize(),
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				alert(data.msg);
+				if(data.status == 1){
+					window.location.href="{:url('index/index')}"
+				}
+			}
+		})
+	}
+</script>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>后台管理系统</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>编辑类别</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" id="myForm">
+                                    <input type="hidden" name="cid" value="{$viewData.dataInfo.cid}">
+                                    <div class="form-group">
+                                        <label>归属类别</label>
+                                        <select class="form-control m-b" name="category_path">
+                                            <option value="0">一级类别</option>
+                                            {volist name="$viewData.dataList" id="dataList"}
+                                                {if $dataList.cid eq $viewData.dataInfo.category_path}
+                                                    <option value="{$dataList.cid}" selected="selected">|{$dataList.category_name}</option>
+                                                {else /}
+                                                    <option value="{$dataList.cid}">|{$dataList.category_name}</option>
+                                                {/if}
+
+
+                                                {volist name="$dataList.twoList" id="twoList"}
+                                                    {if $twoList.cid eq $viewData.dataInfo.category_path}
+                                                        <option value="{$twoList.cid}" selected="selected">└|{$twoList.category_name}</option>
+                                                    {else /}
+                                                        <option value="{$twoList.cid}">└|{$twoList.category_name}</option>
+                                                    {/if}
+                                                {/volist}
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>类别名称</label>
+                                        <input type="text" placeholder="" class="form-control" name="category_name" value="{$viewData.dataInfo.category_name}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>图片</label>
+                                        {if $viewData.dataInfo.category_picture}
+                                        <img src="__PUBLIC__/uploads/goods_category/s_{$viewData.dataInfo.category_picture}"><br />
+                                        {/if}
+                                        <input type="file" accept="image/*" name="picture_file">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>类别排序</label>
+                                        <input type="number" placeholder="类别排序" class="form-control" name="category_sequence" value="{$viewData.dataInfo.category_sequence}">
+                                        <span class="help-block m-b-none">排序规则为1，2，3，4...顺序，如有排序值相同的则后添加的排在前边</span>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-primary pull-left m-t-n-xs" type="button" onclick="getData()">
+                                            <strong>确  定</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+
+
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/static/js/jquery.form.js"></script>
+    <script type="text/javascript">
+        // function getData(){
+        //     $.ajax({
+        //         url:"{:url('goods_category/updateDatas')}",
+        //         data:$("#myForm").serialize(),
+        //         dataType:"json",
+        //         type:"post",
+        //         success:function(data){
+        //             alert(data.msg);
+        //             if(data.status == 1){
+        //                 window.location.href="{:url('goods_category/dataList')}"
+        //             }
+                    
+        //         }
+        //     })
+        // }
+
+        function getData(){
+            $("#myForm").ajaxSubmit({
+                url:"{:url('goods_category/updateDatas')}",
+                dataType:"json",
+                type:"post",
+                success: function(data) { 
+                    alert(data.msg);
+                    if(data.status==1){
+                        window.location.href="{:url('goods_category/dataList')}";
+                    }
+                },
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/user_recharge.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		<form id="myForm" >
+			
+		
+		<div class="row recharge_box">
+			<div class="col-xs-12  recharge_title">
+				1.选择充值积分额度
+			</div>
+			<div class="col-xs-12 text-center">
+				<!-- <input type="file"> -->
+				{volist name="$viewData.dataList" id="dataList" key="keys"}
+					
+					{if $keys eq 1}
+						<input type="radio" name="recharge_id" checked id="selected_{$dataList.rid}" class="select_status_check" value="{$dataList.rid}">
+					{else /}
+						<input type="radio" name="recharge_id" id="selected_{$dataList.rid}" class="select_status_check" value="{$dataList.rid}">
+					{/if}
+					<label  class="money_box" for="selected_{$dataList.rid}">
+						{$dataList.recharge_name}<br />
+						<span>{$dataList.recharge_describe}</span>
+					</label>
+				{/volist}
+			</div>
+		</div>
+		<div class="row qr_code">
+			<div class="col-xs-12  recharge_title">
+				2.扫码支付
+			</div>
+			<div class="col-xs-6 qr_code_left">
+				<div class="qr_code_title">微信充值</div>
+				<img src="__PUBLIC__/system/{$viewData.wechatQrcode}">
+			</div>
+			<div class="col-xs-6 qr_code_right">
+				<div class="qr_code_title">支付宝充值</div>
+
+				<img src="__PUBLIC__/system/{$viewData.alipayQrcode}">
+			</div>
+		</div>
+		<div class="row recharge_box_two">
+			<div class="col-xs-12 recharge_title">
+				3.请上传支付凭证
+			</div>
+			<div class="col-xs-12 ">
+				<input type="file" id="pirture_input" onchange="previewPicture()" name="picture_file" accept="image/gif,image/jpeg,image/png">
+				<label for="pirture_input">
+					点击上传凭证
+					<div id="picture_box">
+						<img src="" id="img3">
+					</div>
+				</label>
+				
+			</div>
+		</div>
+		</form>
+	
+	</div>
+	<div class="recharge_button" onclick="getData()">
+		提交
+	</div>
+<script type="text/javascript">
+	function getData(){
+		$("#myForm").ajaxSubmit({
+			url:"{:url('Recharge/getRecharge')}",
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				alert(data.msg);
+				if(data.status == 1){
+					// history.back(-1);
+					window.location.href="{:url('User/index')}"
+				}
+			}
+		})
+	}
+	function previewPicture() {
+	 	$("#picture_box").css("display", "block");
+	 	var reads = new FileReader();
+	 	f = document.getElementById('pirture_input').files[0];
+	 	reads.readAsDataURL(f);
+	 	reads.onload = function(e) {
+	 		document.getElementById('img3').src = this.result;
+	 		// $("#img3").css("display", "block");
+	 	};
+	}
+</script>
+</body>
+</html>

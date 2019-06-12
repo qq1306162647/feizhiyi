@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/order_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+				<span class="send_button">
+					<img src="__PUBLIC__/static/img/kf.png">
+				</span>
+			</div>
+		</div>
+
+		{volist name="$viewData.dataList" id="dataList"}
+		<div class="row order_box" id="order_box{$dataList.oid}">
+			<div class="col-xs-12">
+				<div class="row order_one_box">
+					<div class="col-xs-8 order_number_text">
+						订单编号：{$dataList.order_number}
+					</div>
+					<div class="col-xs-4 order_status_text">
+						{$dataList.status_name_one}
+					</div>
+				</div>
+				{volist name="dataList.goodsList" id="goodsList"}
+				<div class="row goods_list_box">
+					<div class="col-xs-3 goods_picture_box">
+						<img src="__PUBLIC__/uploads/goods/{$goodsList.goods_picture}">
+					</div>
+					<div class="col-xs-6 goods_title_box">
+						{$goodsList.goods_name}
+					</div>
+
+					<div class="col-xs-3 goods_right_text">
+						<span class="goods_price_text">￥{$goodsList.order_goods_unit_price}</span>
+						<br />
+						<span class="goods_number_text">x{$goodsList.order_goods_number}</span>
+					</div>
+				</div>
+				{/volist}
+			
+				<div class="row">
+					<div class="col-xs-12 text-right">
+						<!-- 共计2件商品 --> 共计：<span>￥{$dataList.order_total_price}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 order_action_list">
+						<!-- <span class="order_action_button">
+							取消订单
+						</span> -->
+						<span class="order_action_button ljzf" onclick="delData({$dataList.oid})">
+							删除订单
+						</span>
+						<!-- {switch $dataList.order_status}
+						    {case 1}
+						    	<span class="order_action_button" onclick="cancelOrder({$dataList.oid})">
+									取消订单
+								</span>
+								<span class="order_action_button ljzf" onclick="orderPay({$dataList.oid})">
+									立即支付
+								</span>
+						    {/case}
+						    {case 3}
+						    	<span class="order_action_button ljzf">
+									确认收货
+								</span>
+						    {/case}
+
+
+						    {default /}
+
+
+						{/switch} -->
+					</div>
+				</div>
+			</div>
+		</div>
+		{/volist}
+	</div>
+<script type="text/javascript">
+	function delData(objId){
+		if(confirm('确定要删除此订单吗？')){
+			$.ajax({
+				url:"{:url('Order/deleteOrder')}",
+				dataType:"json",
+				type:"post",
+				data:{s:objId},
+				success:function(data){
+					// alert(data.msg)
+					if(data.status == 1){
+						$("#order_box"+objId).hide();
+					}else{
+						alert(data.msg);
+					}
+				}
+			})
+		}
+	}
+	function cancelOrder(objId){
+		if(confirm('确定要取消此订单吗？')){
+			$.ajax({
+				url:"{:url('Order/cancelOrder')}",
+				dataType:"json",
+				type:"post",
+				data:{s:objId},
+				success:function(data){
+					// alert(data.msg)
+					if(data.status == 1){
+						$("#order_box"+objId).hide();
+					}else{
+						alert(data.msg);
+					}
+				}
+			})
+		}
+	}
+
+
+	function orderPay(objid){
+		$.ajax({
+			url:"{:url('Order/orderPay')}",
+			data:{oid:objid},
+			dataType:"json",
+			type:"post",
+			success:function(data){
+				
+				if(data.status == 1){
+					window.location.href="{:url('Pays/index')}"
+				}else if(data.status == 2){
+					alert(data.msg)
+					// window.location.href="{:url('User/index')}"
+				}else if(data.status == 3){
+					alert(data.msg)
+					window.location.href="{:url('User/userRecharge')}"
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

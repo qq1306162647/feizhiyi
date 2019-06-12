@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/goods_list.css">
+	
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row list_top_box ">
+		<a class="col-xs-2" href="javascript:history.go(-1)">
+			<img src="__PUBLIC__/static/img/list_back.png">
+		</a>
+		<div class="col-xs-10 top_input_box">
+			<input type="text" name="" onfocus="webToSearch()" placeholder="请输入您要搜索的关键词">
+		</div>
+	</div>
+
+	<div class="row order_text_box">
+		<a class="col-xs-3 order_text_list order_text_list_one" href="{:url('categorys/index')}">
+			{$viewData.categoryInfo.category_name}
+		</a>
+		{volist name="$viewData.goodsOrderText" id="goodsOrderText"}
+			{if $goodsOrderText.order_name eq $Think.session.plateGoodsOrder}
+			<div class="col-xs-3 order_text_list order_text_list_selected" onclick="setOrderWhere('{$goodsOrderText.order_name}')">
+
+			{else /}
+			<div class="col-xs-3 order_text_list" onclick="setOrderWhere('{$goodsOrderText.order_name}')">
+			{/if}
+			
+				{$goodsOrderText.order_text}
+			</div>
+		{/volist}
+	</div>
+
+	<!-- 推荐商品开始 -->
+	<div class="test1">
+		{volist name="viewData.dataList" id="goodsListTwo"}
+			<a class="goods_two_list_box" href="{:url('Goods/details',['s'=>$goodsListTwo.gid])}">
+				<div class="goods_two_img_box">
+					<img src="__PUBLIC__/uploads/goods/s_{$goodsListTwo.goods_picture}">
+				</div>
+				<div class="goods_two_title_box">
+					{$goodsListTwo.goods_name}
+				</div>
+				<div class="goods_two_text_box">
+					<span class="goods_two_text_price">￥{$goodsListTwo.goods_new_price}</span>
+					{if $goodsListTwo.goods_is_postage eq 1}
+					<span class="goods_two_postage">免邮</span>
+					{/if}
+				</div>
+			</a>
+		{/volist}
+	</div>
+	<!-- 推荐商品结束 -->	
+
+</div>	
+<script type="text/javascript">
+//页面跳转到搜索
+function webToSearch()
+{
+	window.location.href="{:url('UserSearch/index')}";
+
+}
+function setOrderWhere(getValue)
+{
+	$.ajax({
+		url:"{:url('Goods/setOrderWhere')}",
+		data:{s:getValue},
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			if(data.status == 1){
+				window.location.href=""
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+</script>
+</body>
+</html>

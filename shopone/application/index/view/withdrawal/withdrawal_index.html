@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/withdrawal_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		<div class="row withdrawal_box">
+			<form id="myForm">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-12 widthdrawal_title">
+						可提现金额 <br />
+						<span>￥{$userInfo.user_commission}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 input_list">
+						<input type="number" name="action_money" placeholder="请输入您要提现的金额">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 input_list">
+						<input type="number" name="alnumber" placeholder="支付宝账号">
+					</div>
+				</div>
+
+				<div class="row" onclick="getData()">
+					<div class="col-xs-12 widthhdrawal">
+						确定
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	
+	</div>
+
+	<!-- {include file="public/footer"} -->
+	<script type="text/javascript">
+		function getData(){
+			$.ajax({
+				url:"{:url('Withdrawal/withdrawalAction')}",
+				data:$("#myForm").serialize(),
+				type:"post",
+				dataType:"json",
+				success:function(data){
+					alert(data.msg);
+					if(data.status == 1){
+						 // window.history.go(-1)
+						// history.back()
+						// history.back(-1);
+						window.location.href="{:url('User/index')}"
+					}
+				}
+			})
+		}
+	</script>
+</body>
+</html>

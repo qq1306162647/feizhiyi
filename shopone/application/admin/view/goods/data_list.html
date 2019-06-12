@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title></title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>商品列表</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="text-center">商品图片</th>
+                                        <th class="text-center">商品名称</th>
+                                        <th class="text-center">商品价格</th>
+                                        <th class="text-center">商品排序</th>
+                                        <th class="text-center">商品类别</th>
+                                        <th class="text-center">是否包邮</th>
+                                        <th class="text-center">商品状态</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="viewData.dataList" id="dataList"}
+                                    <tr>
+                                        <td>
+                                            <img src="__PUBLIC__/uploads/goods/s_{$dataList.goods_picture}" style="width: 80px;">
+                                        </td>
+                                        <td style="max-width: 20rem;">
+                                            {$dataList.goods_name}
+                                        </td>
+                                        <td>
+                                            原价：{$dataList.goods_old_price} <br />
+                                            售卖价：{$dataList.goods_new_price}
+                                        </td>
+                                        <td>
+                                            {$dataList.goods_seqencing} 
+                                        </td>
+                                        <td>
+                                            {$dataList.category_name}
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                            {if $dataList.goods_is_postage eq 1}
+                                                包邮<br />
+                                                <button class="btn  btn-w-m btn-danger   " type="button" onclick="setSostage({$dataList.gid},2)">
+                                                    <i class="fa fa-paste"></i>&nbsp;&nbsp;取消包邮
+                                                </button>
+                                            {else /}
+                                                不包邮<br />
+                                                <button  class="btn btn-w-m btn-success  " type="button" onclick="setSostage({$dataList.gid},1)">
+                                                    <i class="fa fa-paste"></i>&nbsp;&nbsp;设置包邮
+                                                </button>
+                                            {/if}
+                                        </td>
+                                        <td>
+                                            {if $dataList.goods_status eq 1}
+                                                商品已上架<br />
+                                                <button class="btn btn-w-m btn-danger   " type="button" onclick="setStatus({$dataList.gid},2)">
+                                                    <i class="fa fa-paste"></i>&nbsp;&nbsp;点击下架
+                                                </button>
+                                            {else /}
+                                                商品已下架<br />
+                                                <button  class="btn btn-w-m btn-success  " type="button" onclick="setStatus({$dataList.gid},1)">
+                                                    <i class="fa fa-paste"></i>&nbsp;&nbsp;点击上架
+                                                </button>
+                                            {/if}
+                                        </td>
+                                        <td>
+                                           
+                                            <a href="{:url('goods/editData',['s'=>$dataList.gid])}" class="btn btn-info  dim" type="button">
+                                                <i class="fa fa-paste"></i>&nbsp;&nbsp;修改
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="__PUBLIC__/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+        function setStatus(id,values){
+            $.ajax({
+                type:"post",
+                url:"{:url('Goods/setStatus')}",
+                data:{gid:id,s:values},
+                dataType:"json",
+                success:function(data){
+                    alert(data.msg);
+                    if(data.status == 1){
+                        window.location.href=""
+                    }
+                }
+            })
+        }
+
+        // 设置包邮
+        function setSostage(id,values){
+            $.ajax({
+                type:"post",
+                url:"{:url('Goods/setSostage')}",
+                data:{gid:id,s:values},
+                dataType:"json",
+                success:function(data){
+                    alert(data.msg);
+                    if(data.status == 1){
+                        window.location.href=""
+                    }
+                }
+            })
+        }
+    </script>
+
+    
+    
+
+</body>
+
+</html>

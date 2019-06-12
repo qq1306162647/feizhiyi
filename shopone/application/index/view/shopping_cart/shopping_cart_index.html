@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/shopping_cart_index.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row cart_top">
+			<a class="col-xs-2 text-left"  href="{:url('Index/index')}">
+				<img src="__PUBLIC__/static/img/back_icon.jpg">
+			</a>
+			<div class="col-xs-8">
+				{$viewData.webTitle}
+			</div>
+			<div class="col-xs-2">
+			</div>
+		</div>
+		{if count($viewData.dataList) elt 0}
+		<div class="row not_cart_data">
+			<div class="col-xs-12">
+				您的购物车空空如也<br />
+				<a href="{:url('Index/index')}">再去逛逛</a>
+			</div>
+		</div>
+		{/if}
+		{volist name="$viewData.dataList" id="dataList" key="keys" empty=""}
+			<div class="row cart_list_box" id="cart_list_{$dataList.sid}">
+				<div class="col-xs-1 goods_select_status_box">
+					<label  for="ss{$dataList.sid}" >
+						{if $dataList.selected_status eq 1}
+							<input type="checkbox" checked="" name="selectedGoods[]" class="goods_select_status_check" id="ss{$dataList.sid}" onclick="cancelSelect({$dataList.sid})">
+						{else /}
+							<input type="checkbox"  name="selectedGoods[]" class="goods_select_status_check" id="ss{$dataList.sid}" onclick="cancelSelect({$dataList.sid})">
+						{/if}
+						<span></span>
+					</label>
+				</div>
+				<div class="col-xs-11 goods_centent_box">
+					<div class="row no_margin">
+						<div class="col-xs-5 goods_picture_box">
+							<img src="__PUBLIC__/uploads/goods/s_{$dataList.goods_picture}">
+						</div>
+						<div class="col-xs-7 goods_text_box">
+							<div class="goods_text_title">{$dataList.goods_name}</div>
+							<div class="goods_money_text">
+								￥{$dataList.goods_new_price}
+							</div>
+							<div class="goods_number_box">
+								<span class="gooods_reduce_number_box" onclick="reduceNumber({$dataList.sid})">－</span>
+								<span id="goods_number_text{$dataList.sid}" >{$dataList.shopping_goods_number}</span>
+								<span class="gooods_plus_number_box" onclick="plusNumber({$dataList.sid})">＋</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-xs-3 goods_money_text">
+					￥{$dataList.shopping_goods_total_price}
+				</div> -->
+			</div>
+		{/volist}
+	</div>
+	
+	<!-- 购物车底部 -->
+	<!-- {$viewData.dataList|dump} -->
+	{if count($viewData.dataList) egt 1}
+		<div class="cart_bottom">
+			
+			<div class="cart_bottom_left">
+				<img src="__PUBLIC__/static/img/check_true.png">
+				合计：<span id="shoppingTotalPrice">￥{$viewData.shoppingSumPrice}</span>
+			</div>
+			<a class="cart_bottom_right" href="{:url('Order/settleCenter')}">去结算</a>
+			
+		</div>
+	{/if}
+<script type="text/javascript">
+//加数量
+function  plusNumber(objId){
+	$.ajax({
+		url:"{:url('ShoppingCart/plusNumber')}",
+		dataType:"json",
+		data:{s:objId},
+		type:"post",
+		success:function(data){
+			if(data.status == 1){
+				$("#goods_number_text"+objId).text(data.newNumber);
+				$("#shoppingTotalPrice").text('￥'+data.shoppingTotalPrice);
+				$("#ss"+objId).attr('checked','true')
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+//减数量
+function reduceNumber(objId){
+	$.ajax({
+		url:"{:url('ShoppingCart/reduceNumber')}",
+		dataType:"json",
+		data:{s:objId},
+		type:"post",
+		success:function(data){
+			if(data.status == 1){
+				if(data.delStatus == 0){
+					$("#goods_number_text"+objId).text(data.newNumber);
+					$("#ss"+objId).attr('checked','true')
+				}else{
+					$("#cart_list_"+objId).hide()
+				}
+				$("#shoppingTotalPrice").text('￥'+data.shoppingTotalPrice);
+				
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+//取消选择
+function cancelSelect(sid){
+	// alert(123);
+	$.ajax({
+		url:"{:url('ShoppingCart/setSelectStatus')}",
+		dataType:"json",
+		data:{s:sid},
+		type:"post",
+		success:function(data){
+			if(data.status == 1){
+				$("#shoppingTotalPrice").text('￥'+data.shoppingTotalPrice);
+			}else{
+				alert(data.msg);
+			}
+		}
+	})
+}
+</script>
+</body>
+</html>

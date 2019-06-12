@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/one_team.css">
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="{:url('User/index')}">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+			</div>
+		</div>
+		{volist name="$viewData.dataList" id="dataList"}
+		<div class="row team_list">
+			<div class="col-xs-5">
+				{if $dataList.user_picture}
+					<img src="__PUBLIC__/uploads/user/{$dataList.user_picture}">
+				{else /}
+					<img src="__PUBLIC__/static/img/defaule_picture1.png">
+				{/if}
+				<!-- <img src="__PUBLIC__/static/img/goods1.jpg"> -->
+			</div>
+			<div class="col-xs-7 text-right">
+				{$dataList.user_phone} <br />
+				<span>{$dataList.user_name}</span>
+			</div>
+		</div>
+		{/volist}
+	
+	</div>
+
+	<!-- {include file="public/footer"} -->
+</body>
+</html>

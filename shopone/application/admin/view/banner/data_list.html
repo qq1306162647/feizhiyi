@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title> - 主页示例</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="" id="ibox-content">
+                        <div class="ibox-title">
+                            <h5>轮播图</h5>
+                        </div>
+                        <div id="vertical-timeline" class="vertical-container light-timeline">
+                            {volist name="viewData.dataList" id="dataList"}
+                            <div class="vertical-timeline-block">
+                                <div class="vertical-timeline-icon blue-bg">
+                                    <i class="fa fa-file-text"></i>
+                                </div>
+                                <div class="vertical-timeline-content">
+                                    <h2>{$dataList.banner_name}</h2>
+                                    <p><img src="__PUBLIC__/uploads/banner/s_{$dataList.banner_picture}"></p>
+                                    <a href="{:url('Banner/editData',['s'=>$dataList.bid])}" class="btn btn-sm btn-success"> 修改 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/layer/layer.min.js"></script>
+    <!-- Flot -->
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.pie.js"></script>
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$viewData.webTitle}</title>
+	<!-- 国产浏览器高速模式 -->
+	<meta name="renderer" content="webkit">
+	<!-- 移动设备优先,禁止缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="__PUBLIC__/static/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/static/bootstrap3/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/bootstrap3/dist/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/receiving_address.css">
+	
+</head>
+<body>
+	<div class="container-fluid receiving_content">
+
+		<div class="row">
+			<div class="col-xs-12 web_top_three">
+				<a class="" href="javascript:history.go(-1)">
+					<img src="__PUBLIC__/static/img/list_back.png">
+				</a>
+				<span>{$viewData.webTitle}</span>
+				<a class="send_button" href="{:url('User/addedAddress')}">添加</a>
+			</div>
+		</div>
+		{volist name="$viewData.dataList" id="dataList" key="k"}
+			<div class="row address_list_box" id="list{$k}"  onclick="setSelectStatus({$dataList.aid})">
+				<div class="col-xs-12 name_phone" >
+					{$dataList.address_name}  {$dataList.address_phone}
+				</div>
+				<div class="col-xs-12 address_text_box">
+					{$dataList.address_text}
+				</div>
+				<div class="col-xs-12 address_action_box">
+					<div class="row">
+						<div class="col-xs-6 address_select_status_box">
+							<label  for="ss{$k}" onclick="setSelectStatus({$dataList.aid})">
+								
+								{if $dataList.selected_status eq 1}
+									<input type="radio" name="selected_status" checked="" class="address_select_status_check" id="ss{$k}">
+								{else /}
+									<input type="radio" name="selected_status"  class="address_select_status_check" id="ss{$k}">
+								{/if}
+								<span></span>
+								设为默认
+							</label>
+						</div>
+						<a class="col-xs-3 action_text" href="{:url('user/editAddress',['s'=>$dataList.aid])}">
+							<img src="__PUBLIC__/static/img/edit_icon.png">
+							编辑
+						</a>
+						<a class="col-xs-3 action_text" onclick="deleteData({$k},{$dataList.aid})" href="javascript:void(0)">
+							<img src="__PUBLIC__/static/img/del_icon.png">
+							删除
+						</a>
+					</div>
+				</div>
+			</div>	
+		{/volist}
+
+	
+	</div>
+	{include file="public/footer"}
+<script type="text/javascript">
+	// $(':radio').click(function(){if(this.checked)$(this).next().css('color','red')});
+	function setSelectStatus(id){
+		// if(confirm('确定要把这个设为默认收货地址吗？')){
+			$.ajax({
+				url:"{:url('User/setAddressSelectStatus')}",
+				data:{aid:id},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					if(data.status != 1){
+						// $("#list"+obj).hide();
+						alert(data.msg);
+					}else{
+						window.location.href="{:url('Order/settleCenter')}"; 
+					}
+				}
+			})
+		// }
+	}
+	function deleteData(obj,id){
+		if(confirm('确定要删除吗？')){
+			$.ajax({
+				url:"{:url('User/deleteAddress')}",
+				data:{s:id},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					alert(data.msg);
+					if(data.status == 1){
+						$("#list"+obj).hide();
+					}
+				}
+			})
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>数据统计</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/static/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/static/admin/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-navicon fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日订单营业额 </span>
+                            <h2 class="font-bold">&yen; {$viewData.oneData}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <!-- <i class="fa fa-cloud fa-5x"></i> -->
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日订单数 </span>
+                            <h2 class="font-bold">{$viewData.twoData}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="widget style1 lazur-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-rmb fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日充值金额 </span>
+                            <h2 class="font-bold">&yen; {$viewData['threeData']}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <!-- <i class="fa fa-music fa-5x"></i> -->
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日充值次数 </span>
+                            <h2 class="font-bold">{$viewData['fourData']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-credit-card fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日提现金额 </span>
+                            <h2 class="font-bold">&yen; {$viewData.tiveData}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <!-- <i class="fa fa-cloud fa-5x"></i> -->
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日拨款次数 </span>
+                            <h2 class="font-bold">{$viewData.sixData}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="widget style1 yellow-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日分销佣金 </span>
+                            <h2 class="font-bold">&yen; {$viewData['sevenData']}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <!-- <i class="fa fa-music fa-5x"></i> -->
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> 今日分销佣金次数 </span>
+                            <h2 class="font-bold">{$viewData['eightData']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            充值已审核总金额<h2 class="font-bold">{$viewData['rechargeTotal']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 yellow-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            充值未审核总金额<h2 class="font-bold">{$viewData['notRechargeTotal']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            订单总金额<h2 class="font-bold">{$viewData['orderTotal']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 navy-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            平台未提现佣金<h2 class="font-bold">{$viewData['notCommission']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 lazur-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            平台提现已打款佣金<h2 class="font-bold">{$viewData['yesCommission']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="widget style1 lazur-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-rmb fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            平台已提现未打款佣金<h2 class="font-bold">{$viewData['unpaidCommission']}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="widget lazur-bg p-xl">
+
+                    <h2>
+                        用户统计
+                    </h2>
+                    <ul class="list-unstyled m-t-md">
+                        {volist name="$viewData.levelList" id="levelList"}
+                            <li>
+                                <span class="fa fa-user m-r-xs"></span>
+                                <label>{$levelList.level_name}</label>
+                                {$levelList.userNumber}
+                            </li>
+                        {/volist}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 全局js -->
+    <script src="__PUBLIC__/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/static/admin/js/jquery-ui-1.10.4.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- 自定义js -->
+    <script src="__PUBLIC__/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- iCheck -->
+    <script src="__PUBLIC__/static/admin/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Jvectormap -->
+    <script src="__PUBLIC__/static/admin/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!-- Flot -->
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="__PUBLIC__/static/admin/js/plugins/flot/jquery.flot.resize.js"></script>
+
+    
+    
+
+</body>
+
+</html>
